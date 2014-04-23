@@ -29,6 +29,8 @@
 
 @implementation URRRadioGroup
 
+@synthesize selectedButton;
+
 - (id)init
 {
     self = [super init];
@@ -89,6 +91,7 @@
 {
     __weak UIButton *button = (UIButton *)recognizer.view;
     
+    self.selectedButton = button;
     [self selectButton:button];
 }
 
