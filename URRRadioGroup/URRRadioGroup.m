@@ -30,6 +30,8 @@
 @implementation URRRadioGroup
 
 @synthesize selectedButton;
+@synthesize buttons = _buttons;
+@synthesize delegate = _delegate;
 
 - (id)init
 {
@@ -117,6 +119,8 @@
             }
         }
     }];
+    
+    [_delegate radioGroup:self didSelectButton:button];
 }
 
 
