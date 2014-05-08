@@ -86,7 +86,7 @@
     
     [_buttons addObject:radio];
     
-    [self tap:tap];
+//    [self tap:tap];
 }
 
 - (void)removeAllButtons
