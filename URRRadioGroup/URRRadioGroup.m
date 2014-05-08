@@ -89,6 +89,11 @@
     [self tap:tap];
 }
 
+- (void)removeAllButtons
+{
+    [_buttons removeAllObjects];
+}
+
 - (void)tap:(UITapGestureRecognizer *)recognizer
 {
     __weak UIButton *button = (UIButton *)recognizer.view;
