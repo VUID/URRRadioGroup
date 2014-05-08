@@ -71,7 +71,7 @@
     
     [_buttons addObject:radio];
     
-    [self tap:tap];
+//    [self tap:tap];
 }
 
 - (void)addButton:(UIButton *)button defaultImage:(UIImage *)defaultImage selectedImage:(UIImage *)selectedImage
