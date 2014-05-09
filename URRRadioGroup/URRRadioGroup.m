@@ -14,15 +14,40 @@
 @property(nonatomic,strong) NSString *selectedText;
 @property(nonatomic,strong) UIImage *defaultImage;
 @property(nonatomic,strong) UIImage *selectedImage;
+
+- (void)selected;
+- (void)deselected;
 @end
 
 @implementation URRRadio
+
+- (void)selected {
+	if(self.selectedImage){
+		[self.control setImage:self.selectedImage forState:UIControlStateNormal];
+		[self.control setImage:self.selectedImage forState:UIControlStateHighlighted];
+		[self.control setImage:self.selectedImage forState:UIControlStateSelected];
+	}else{
+		[self.control setTitle:self.selectedText forState:UIControlStateNormal];
+	}
+}
+
+- (void)deselected {
+	if(self.defaultImage){
+		[self.control setImage:self.defaultImage forState:UIControlStateNormal];
+		[self.control setImage:self.defaultImage forState:UIControlStateHighlighted];
+		[self.control setImage:self.defaultImage forState:UIControlStateSelected];
+	}else{
+		[self.control setTitle:self.defaultText forState:UIControlStateNormal];
+	}
+}
+
 @end
 
 
 @interface URRRadioGroup()
 {
     NSMutableArray *_buttons;
+	NSInteger staticIndex;
 }
 
 @end
@@ -37,7 +62,8 @@
     }
     
     _buttons = [[NSMutableArray alloc] initWithCapacity:0];
-    
+    staticIndex = -1;
+	
     return self;
 }
 
@@ -66,8 +92,6 @@
     radio.selectedText = selectedText;
     
     [_buttons addObject:radio];
-    
-    [self tap:tap];
 }
 
 - (void)addButton:(UIButton *)button defaultImage:(UIImage *)defaultImage selectedImage:(UIImage *)selectedImage
@@ -81,8 +105,23 @@
     radio.selectedImage = selectedImage;
     
     [_buttons addObject:radio];
-    
-    [self tap:tap];
+}
+
+- (void)addStaticButton:(UIButton *)button defaultText:(NSString *)defaultText selectedText:(NSString *)selectedText {
+	[self addButton:button defaultText:defaultText selectedText:selectedText];
+	if (staticIndex == -1) {
+		staticIndex = [_buttons count]-1;
+		[(URRRadio *)[_buttons objectAtIndex:staticIndex] selected];
+	}
+}
+
+- (void)addStaticButton:(UIButton *)button defaultImage:(UIImage *)defaultImage selectedImage:(UIImage *)selectedImage
+{
+	[self addButton:button defaultImage:defaultImage selectedImage:selectedImage];
+	if (staticIndex == -1) {
+		staticIndex = [_buttons count]-1;
+		[(URRRadio *)[_buttons objectAtIndex:staticIndex] selected];
+	}
 }
 
 - (void)tap:(UITapGestureRecognizer *)recognizer
@@ -97,23 +136,33 @@
     [_buttons enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         URRRadio *radio = (URRRadio *)obj;
         if(button == radio.control){
-            if(radio.selectedImage){
-                [radio.control setImage:radio.selectedImage forState:UIControlStateNormal];
-                [radio.control setImage:radio.selectedImage forState:UIControlStateHighlighted];
-                [radio.control setImage:radio.selectedImage forState:UIControlStateSelected];
-            }else{
-                [radio.control setTitle:radio.selectedText forState:UIControlStateNormal];
-            }
+			if (staticIndex>=0) {
+				[self swapRadioButtons:idx];
+			}
+			[radio selected];
         }else{
-            if(radio.defaultImage){
-                [radio.control setImage:radio.defaultImage forState:UIControlStateNormal];
-                [radio.control setImage:radio.defaultImage forState:UIControlStateHighlighted];
-                [radio.control setImage:radio.defaultImage forState:UIControlStateSelected];
-            }else{
-                [radio.control setTitle:radio.defaultText forState:UIControlStateNormal];
-            }
+			[radio deselected];
         }
     }];
+}
+
+- (void)swapRadioButtons:(NSUInteger)index {
+	if (staticIndex == index) return;
+	URRRadio *staticButton = (URRRadio *)[_buttons objectAtIndex:staticIndex];
+	URRRadio *selectedButton = (URRRadio *)[_buttons objectAtIndex:index];
+	
+	[staticButton deselected];
+	
+	CGRect frame = [[staticButton control] frame];
+	[[staticButton control] setFrame:[[selectedButton control] frame]];
+	[[selectedButton control] setFrame:frame];
+	
+	NSMutableIndexSet *indicies = [[NSMutableIndexSet alloc] init];
+	[indicies addIndex:staticIndex];
+	[indicies addIndex:index];
+	
+	[_buttons removeObjectsAtIndexes:indicies];
+	[_buttons insertObjects:@[selectedButton, staticButton] atIndexes:indicies];
 }
 
 

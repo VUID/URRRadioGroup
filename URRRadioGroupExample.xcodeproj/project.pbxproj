@@ -473,6 +473,7 @@
 				AB72BECE18D6E70B0069B069 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AB72BECF18D6E70B0069B069 /* Build configuration list for PBXNativeTarget "URRRadioGroupExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -481,6 +482,7 @@
 				AB72BED118D6E70B0069B069 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

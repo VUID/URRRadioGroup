@@ -13,6 +13,7 @@
 
 @property(nonatomic,strong) URRRadioGroup *textGroup;
 @property(nonatomic,strong) URRRadioGroup *imageGroup;
+@property(nonatomic,strong) URRRadioGroup *staticImageGroup;
 
 @end
 
@@ -33,6 +34,13 @@
     [self.imageGroup addButton:self.radio5 defaultImage:[UIImage imageNamed:@"check_off"] selectedImage:[UIImage imageNamed:@"check_on"]];
     [self.imageGroup addButton:self.radio6 defaultImage:[UIImage imageNamed:@"check_off"] selectedImage:[UIImage imageNamed:@"check_on"]];
     [self.imageGroup selectButton:self.radio4];
+	
+	self.staticImageGroup = [URRRadioGroup new];
+	[self.staticImageGroup addStaticButton:self.radio7 defaultImage:[UIImage imageNamed:@"check_off"] selectedImage:[UIImage imageNamed:@"check_on"]];
+    [self.staticImageGroup addButton:self.radio8 defaultImage:[UIImage imageNamed:@"check_off_red"] selectedImage:[UIImage imageNamed:@"check_on_red"]];
+    [self.staticImageGroup addButton:self.radio9 defaultImage:[UIImage imageNamed:@"check_off_blue"] selectedImage:[UIImage imageNamed:@"check_on_blue"]];
+    //[self.staticImageGroup selectButton:self.radio7];
+	
 }
 
 @end

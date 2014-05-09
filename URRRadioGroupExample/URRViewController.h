@@ -18,4 +18,9 @@
 @property(nonatomic,weak) IBOutlet UIButton *radio5;
 @property(nonatomic,weak) IBOutlet UIButton *radio6;
 
+@property (weak, nonatomic) IBOutlet UIButton *radio7;
+@property (weak, nonatomic) IBOutlet UIButton *radio8;
+@property (weak, nonatomic) IBOutlet UIButton *radio9;
+
+
 @end

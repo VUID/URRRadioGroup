@@ -12,6 +12,10 @@
 
 - (void)addButton:(UIButton *)button defaultText:(NSString *)defaultText selectedText:(NSString *)selectedText;
 - (void)addButton:(UIButton *)button defaultImage:(UIImage *)defaultImage selectedImage:(UIImage *)selectedImage;
+- (void)addStaticButton:(UIButton *)button defaultText:(NSString *)defaultText selectedText:(NSString *)selectedText;
+- (void)addStaticButton:(UIButton *)button defaultImage:(UIImage *)defaultImage selectedImage:(UIImage *)selectedImage;
+
+
 - (void)selectButton:(UIButton *)button;
 
 @end
